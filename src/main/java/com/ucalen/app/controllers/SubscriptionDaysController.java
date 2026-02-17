@@ -21,12 +21,13 @@ public class SubscriptionDaysController {
         this.userRepository = userRepository;
     }
 
-    @PostMapping()
-    public ResponseEntity<SubscriptionDay> addSubscriptionDay(@RequestBody SubscriptionDayRequest subscriptionDayRequest) {
-        Long userId = userRepository.findByUsername(subscriptionDayRequest.getUsername())
-                .orElseThrow(() -> new RuntimeException("User not found: " + subscriptionDayRequest.getUsername()))
+    private static Long getUserIdFromUsername(UserRepository userRepository, Authentication authentication) {
+        return userRepository.findByUsername(authentication.getName())
+                .orElseThrow(() -> new RuntimeException("User not found: " + authentication.getName()))
                 .getId();
+    }
 
+    private static SubscriptionDay getSubscriptionDay(SubscriptionDayRequest subscriptionDayRequest, Long userId) {
         SubscriptionDay subscriptionDay = new SubscriptionDay();
         subscriptionDay.setUserId(userId);
         subscriptionDay.setLinkedDate(subscriptionDayRequest.getLinkedDate());
@@ -34,18 +35,44 @@ public class SubscriptionDaysController {
         subscriptionDay.setSubscriptionExpires(subscriptionDayRequest.getSubscriptionExpires());
         subscriptionDay.setSubscriptionPrice(subscriptionDayRequest.getSubscriptionPrice());
         subscriptionDay.setChargedCard(subscriptionDayRequest.getChargedCard());
+        return subscriptionDay;
+    }
 
+    @PostMapping()
+    public ResponseEntity<SubscriptionDay> addSubscriptionDay(@RequestBody SubscriptionDayRequest subscriptionDayRequest,
+                                                              Authentication authentication) {
+        Long userId = getUserIdFromUsername(userRepository, authentication);
+        SubscriptionDay subscriptionDay = getSubscriptionDay(subscriptionDayRequest, userId);
         SubscriptionDay saved = subscriptionDaysRepository.save(subscriptionDay);
         return ResponseEntity.ok(saved);
     }
 
     @GetMapping
-    public ResponseEntity<SubscriptionDay> getSubscriptionDays(Authentication authentication) {
-        Long userId = userRepository.findByUsername(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("User not found: " + authentication.getName()))
-                .getId();
+    public ResponseEntity<List<SubscriptionDay>> getSubscriptionDays(Authentication authentication) {
+        Long userId = getUserIdFromUsername(userRepository, authentication);
         List<SubscriptionDay> days = subscriptionDaysRepository.findByUserId(userId);
-        return ResponseEntity.ok(days.isEmpty() ? null : days.get(0));
+        return ResponseEntity.ok(days);
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<SubscriptionDay> updateSubscriptionDay(@RequestBody SubscriptionDayRequest subscriptionDayRequest,
+                                                                 Authentication authentication) {
+        Long userId = getUserIdFromUsername(userRepository, authentication);
+        SubscriptionDay subscriptionDay = getSubscriptionDay(subscriptionDayRequest, userId);
+        subscriptionDay.setId(subscriptionDayRequest.getId());
+        SubscriptionDay saved = subscriptionDaysRepository.save(subscriptionDay);
+        return ResponseEntity.ok(saved);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteSubscriptionDay(@PathVariable Long id, Authentication authentication) {
+        Long userId = getUserIdFromUsername(userRepository, authentication);
+        SubscriptionDay subscriptionDay = subscriptionDaysRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Subscription day not found with id: " + id));
+        if (!subscriptionDay.getUserId().equals(userId)) {
+            return ResponseEntity.status(403).body("You are not authorized to delete this subscription day");
+        }
+        subscriptionDaysRepository.delete(subscriptionDay);
+        return ResponseEntity.ok("Subscription day deleted successfully");
+    }
 }

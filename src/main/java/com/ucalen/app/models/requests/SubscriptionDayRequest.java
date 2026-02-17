@@ -6,6 +6,7 @@ import java.util.Date;
 
 @Data
 public class SubscriptionDayRequest {
+    private Long id;
     private String username;
     private Date linkedDate;
     private String subscriptionName;
