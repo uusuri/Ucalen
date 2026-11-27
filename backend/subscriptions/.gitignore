@@ -1,0 +1,55 @@
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+/secrets/
+
+# Go binaries
+/bin/
+/build/
+/dist/
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Go testing and coverage
+*.test
+*.out
+coverage/
+coverage.html
+*.prof
+
+# Go workspace
+go.work
+go.work.sum
+
+# IDE and editors
+.idea/
+.vscode/
+*.iml
+*.swp
+*.swo
+
+# Logs
+*.log
+/logs/
+
+# Local database data
+/postgres_data/
+/data/
+
+# Temporary files
+/tmp/
+/temp/
+*.tmp
+
+# Operating systems
+.DS_Store
+Thumbs.db
+
+# Docker local overrides
+compose.override.yaml
+compose.override.yml
+docker-compose.override.yml
