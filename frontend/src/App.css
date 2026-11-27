@@ -1,0 +1,66 @@
+.App {
+  min-height: 100vh;
+  background: var(--bg-primary);
+  position: relative;
+}
+
+.main-content {
+  padding: 20px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Subtle grid pattern background */
+.App::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--border-light) 1px, transparent 1px),
+    linear-gradient(90deg, var(--border-light) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.3;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Page transition animations */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Utility classes */
+.brutal-border {
+  border: 3px solid var(--border-color);
+  box-shadow: var(--shadow-brutal);
+}
+
+.brutal-border:hover {
+  box-shadow: var(--shadow-brutal-hover);
+  transform: translate(-2px, -2px);
+}
+
+/* Responsive container */
+@media (max-width: 768px) {
+  .main-content {
+    padding: 10px;
+  }
+}

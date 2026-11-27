@@ -1,0 +1,770 @@
+.calendar-wrapper {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 20px;
+  min-height: calc(100vh - 200px);
+}
+
+.calendar-container {
+  flex: 0 1 auto;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Today button */
+.today-btn {
+  width: 100%;
+  margin-top: 15px;
+  padding: 14px 24px;
+  background: var(--bg-secondary);
+  border: 3px solid var(--border-color);
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--text-primary);
+  box-shadow: var(--shadow-brutal);
+}
+
+.today-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-hover);
+}
+
+/* Neobrutalism calendar override styles */
+.react-calendar {
+  width: 100%;
+  max-width: 500px;
+  min-width: 320px;
+  background: var(--bg-primary);
+  border: 3px solid var(--border-color);
+  box-shadow: var(--shadow-brutal);
+  font-family: inherit;
+  padding: 20px;
+}
+
+.react-calendar__navigation {
+  display: flex;
+  margin-bottom: 20px;
+}
+
+.react-calendar__navigation button {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 12px 8px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.react-calendar__navigation button:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.react-calendar__navigation button:disabled {
+  background: var(--bg-accent);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+
+.react-calendar__month-view__weekdays {
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  padding: 10px 0;
+  border-bottom: 2px solid var(--border-light);
+  margin-bottom: 10px;
+}
+
+.react-calendar__month-view__weekdays__weekday {
+  padding: 8px;
+}
+
+.react-calendar__month-view__weekdays__weekday abbr {
+  text-decoration: none;
+}
+
+.react-calendar__tile {
+  background: transparent;
+  border: 2px solid transparent;
+  padding: 18px 10px;
+  font-size: 1rem;
+  font-weight: 500;
+  color: var(--text-primary);
+  transition: var(--transition-smooth);
+  position: relative;
+}
+
+.react-calendar__tile:hover {
+  background: var(--bg-secondary);
+  border-color: var(--border-color);
+  transform: translate(-2px, -2px);
+  box-shadow: 2px 2px 0 var(--border-color);
+}
+
+.react-calendar__tile:active {
+  transform: translate(0, 0);
+  box-shadow: none;
+}
+
+.react-calendar__tile--now {
+  background: var(--accent-warm);
+  color: var(--text-primary);
+  font-weight: 700;
+}
+
+.react-calendar__tile--now:hover {
+  background: var(--accent-warm);
+}
+
+.react-calendar__tile--active {
+  background: var(--text-primary) !important;
+  color: var(--bg-primary) !important;
+  font-weight: 700;
+  box-shadow: var(--shadow-brutal);
+}
+
+.react-calendar__tile--active:hover {
+  background: var(--text-primary);
+  transform: translate(-2px, -2px);
+  box-shadow: var(--shadow-brutal-hover);
+}
+
+.react-calendar__month-view__days__day--neighboringMonth {
+  color: var(--text-muted);
+}
+
+/* Calendar day subscription indicator */
+.calendar-day-indicator {
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 3px;
+}
+
+.calendar-day-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--text-primary);
+  border-radius: 50%;
+}
+
+.react-calendar__tile--active .calendar-day-dot {
+  background: var(--bg-primary);
+}
+
+/* Day details panel */
+.day-details-panel {
+  flex: 0 1 400px;
+  background: var(--bg-primary);
+  border: 3px solid var(--border-color);
+  box-shadow: var(--shadow-brutal);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.day-details-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 3px solid var(--border-color);
+}
+
+.day-details-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.day-details-close {
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  color: var(--text-primary);
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1.2rem;
+  transition: var(--transition-smooth);
+}
+
+.day-details-close:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  transform: rotate(90deg);
+}
+
+.day-details-date {
+  font-size: 2.5rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--text-primary);
+}
+
+.day-details-weekday {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-secondary);
+  margin-top: 5px;
+}
+
+.day-details-countdown {
+  display: inline-block;
+  padding: 10px 16px;
+  background: var(--accent-warm);
+  border: 2px solid var(--border-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.day-details-countdown--past {
+  background: var(--bg-accent);
+}
+
+.day-details-countdown--today {
+  background: var(--accent-cool);
+}
+
+.day-details-events {
+  padding: 20px;
+  background: var(--bg-secondary);
+  border: 2px dashed var(--border-light);
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 10px;
+  min-height: 100px;
+}
+
+.events-loading,
+.no-events {
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: center;
+  padding: 20px;
+}
+
+/* Subscriptions list styles */
+.subscriptions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.subscription-item {
+  padding: 14px;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  transition: var(--transition-smooth);
+}
+
+.subscription-item:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+
+.subscription-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.subscription-item-name {
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.subscription-item-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.subscription-item-price {
+  font-weight: 700;
+  font-size: 1rem;
+  padding: 4px 10px;
+  background: var(--accent-warm);
+  border: 2px solid var(--border-color);
+}
+
+.subscription-edit-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--text-primary);
+}
+
+.subscription-edit-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.subscription-delete-btn {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-secondary);
+  border: 2px solid var(--border-color);
+  font-size: 1rem;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--text-primary);
+}
+
+.subscription-delete-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.subscription-item-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+
+.subscription-item-expires {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.subscription-item-card {
+  font-weight: 500;
+  padding: 2px 8px;
+  background: var(--bg-accent);
+  border: 1px solid var(--border-light);
+}
+
+/* Subscription section styles */
+.day-details-subscription {
+  margin-top: auto;
+}
+
+.subscription-add-btn {
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--bg-secondary);
+  border: 3px solid var(--border-color);
+  font-weight: 700;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--text-primary);
+}
+
+.subscription-add-btn:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+
+/* Login warning styles */
+.login-warning {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  margin-bottom: 12px;
+  background: #fff3cd;
+  border: 3px solid #ffc107;
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+
+.login-warning-icon {
+  font-size: 1.5rem;
+  flex-shrink: 0;
+}
+
+.login-warning-text {
+  flex: 1;
+}
+
+.login-warning-text strong {
+  display: block;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  color: #856404;
+  margin-bottom: 4px;
+}
+
+.login-warning-text p {
+  margin: 0;
+  font-size: 0.85rem;
+  color: #856404;
+}
+
+.login-warning-close {
+  background: transparent;
+  border: 2px solid #856404;
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: #856404;
+  transition: var(--transition-smooth);
+  flex-shrink: 0;
+}
+
+.login-warning-close:hover {
+  background: #856404;
+  color: #fff3cd;
+}
+
+.subscription-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 20px;
+  background: var(--bg-secondary);
+  border: 3px solid var(--border-color);
+}
+
+.subscription-form-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: 12px;
+  border-bottom: 2px solid var(--border-light);
+}
+
+.subscription-form-header h4 {
+  margin: 0;
+  font-size: 1.1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+
+.subscription-form-close {
+  background: transparent;
+  border: 2px solid var(--border-color);
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: var(--transition-smooth);
+}
+
+.subscription-form-close:hover {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.subscription-label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.subscription-label span {
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+.subscription-label input {
+  padding: 12px 14px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: var(--transition-smooth);
+  color: var(--text-primary);
+}
+
+.subscription-label input:focus {
+  outline: none;
+  border-color: var(--text-primary);
+  box-shadow: 3px 3px 0 var(--border-color);
+}
+
+.subscription-label input::placeholder {
+  color: var(--text-muted);
+}
+
+/* Dark theme input overrides */
+[data-theme="dark"] .subscription-label input {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .subscription-form-header h4 {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .subscription-label span {
+  color: var(--text-secondary);
+}
+
+[data-theme="dark"] .custom-date-picker input {
+  color: var(--text-primary);
+  background: var(--bg-primary);
+}
+
+[data-theme="dark"] .expiration-preview {
+  color: var(--text-primary);
+}
+
+.subscription-error {
+  padding: 12px 16px;
+  background: var(--bg-accent);
+  border: 3px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  box-shadow: var(--shadow-brutal);
+}
+
+.subscription-success {
+  padding: 12px 16px;
+  background: var(--bg-secondary);
+  border: 3px solid var(--border-color);
+  color: var(--text-primary);
+  font-size: 0.9rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 10px;
+  box-shadow: var(--shadow-brutal);
+}
+
+.subscription-form-actions {
+  display: flex;
+  gap: 12px;
+  padding-top: 8px;
+}
+
+.subscription-cancel-btn,
+.subscription-submit-btn {
+  flex: 1;
+  padding: 12px 16px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  border: 2px solid var(--border-color);
+}
+
+.subscription-cancel-btn {
+  background: transparent;
+  color: var(--text-primary);
+}
+
+.subscription-cancel-btn:hover {
+  background: var(--bg-accent);
+}
+
+/* Dark theme form buttons */
+[data-theme="dark"] .subscription-cancel-btn {
+  color: var(--text-primary);
+}
+
+[data-theme="dark"] .subscription-form-close {
+  color: var(--text-primary);
+}
+
+.subscription-submit-btn {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+}
+
+.subscription-submit-btn:hover:not(:disabled) {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 var(--border-color);
+}
+
+.subscription-submit-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Expiration options styles */
+.expiration-options {
+  display: flex;
+  gap: 8px;
+}
+
+.expiration-option-btn {
+  flex: 1;
+  padding: 10px 12px;
+  background: var(--bg-primary);
+  border: 2px solid var(--border-color);
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  color: var(--text-primary);
+}
+
+.expiration-option-btn:hover {
+  background: var(--bg-secondary);
+  transform: translate(-1px, -1px);
+  box-shadow: 2px 2px 0 var(--border-color);
+}
+
+.expiration-option-btn.active {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  box-shadow: var(--shadow-brutal);
+}
+
+.custom-date-picker {
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.custom-date-picker input {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid var(--border-color);
+  background: var(--bg-primary);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: var(--transition-smooth);
+  color: var(--text-primary);
+}
+
+.custom-date-picker input:focus {
+  outline: none;
+  border-color: var(--text-primary);
+  box-shadow: 3px 3px 0 var(--border-color);
+}
+
+/* Custom date input color scheme for dark mode */
+[data-theme="dark"] .custom-date-picker input::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+.expiration-preview {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: var(--accent-warm);
+  border: 2px solid var(--border-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
+
+/* Responsive styles */
+@media (max-width: 900px) {
+  .calendar-wrapper {
+    flex-direction: column;
+    padding: 15px;
+    gap: 20px;
+  }
+
+  .calendar-container {
+    width: 100%;
+  }
+
+  .react-calendar {
+    max-width: 100%;
+    min-width: auto;
+  }
+
+  .day-details-panel {
+    flex: 1 1 auto;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .react-calendar {
+    padding: 10px;
+  }
+
+  .react-calendar__tile {
+    padding: 10px 5px;
+    font-size: 0.9rem;
+  }
+
+  .react-calendar__navigation button {
+    padding: 8px 4px;
+    font-size: 0.8rem;
+  }
+
+  .day-details-panel {
+    padding: 20px;
+  }
+
+  .day-details-date {
+    font-size: 2rem;
+  }
+
+  .expiration-options {
+    flex-direction: column;
+  }
+
+  .expiration-option-btn {
+    padding: 12px;
+  }
+}

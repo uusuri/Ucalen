@@ -1,0 +1,74 @@
+.welcome-message {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: clamp(3rem, 10vw, 8rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--text-primary);
+  background: var(--bg-primary);
+  z-index: 100;
+  overflow: hidden;
+}
+
+.welcome-message::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(135deg, transparent 40%, var(--bg-secondary) 40%, var(--bg-secondary) 60%, transparent 60%);
+  opacity: 0.5;
+  animation: welcomePattern 3s ease-in-out infinite;
+}
+
+.welcome-text {
+  position: relative;
+  z-index: 1;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.welcome-underline {
+  width: 0;
+  height: 6px;
+  background: var(--text-primary);
+  margin-top: 20px;
+  animation: expandLine 1.5s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+@keyframes expandLine {
+  to {
+    width: min(300px, 50vw);
+  }
+}
+
+@keyframes welcomePattern {
+  0%, 100% { transform: scale(1) rotate(0deg); opacity: 0.3; }
+  50% { transform: scale(1.1) rotate(2deg); opacity: 0.5; }
+}
+
+/* Decorative corners */
+.welcome-message::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  left: 30px;
+  right: 30px;
+  bottom: 30px;
+  border: 3px solid var(--border-light);
+  pointer-events: none;
+  opacity: 0;
+  animation: fadeInBorder 1s ease-out forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeInBorder {
+  to { opacity: 1; }
+}
